@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/work/:slug/index.html", "destination": "/work/:slug/", "permanent": true },
+    { "source": "/work/:slug", "destination": "/work/:slug/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
