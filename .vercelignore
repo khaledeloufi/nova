@@ -1,0 +1,8 @@
+# Files excluded from Vercel CLI uploads (site does not reference these)
+projects
+tools
+*.bat
+README.md
+.git
+.gitignore
+.vercel
