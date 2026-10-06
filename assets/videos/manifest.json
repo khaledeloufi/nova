@@ -1,0 +1,72 @@
+{
+  "v7": {
+    "video": "v7.mp4",
+    "poster": "v7-poster.jpg",
+    "frames": [
+      "v7-frame-1.jpg",
+      "v7-frame-2.jpg",
+      "v7-frame-3.jpg"
+    ],
+    "duration": 10.0
+  },
+  "mercure": {
+    "video": "mercure.mp4",
+    "poster": "mercure-poster.jpg",
+    "frames": [
+      "mercure-frame-1.jpg",
+      "mercure-frame-2.jpg",
+      "mercure-frame-3.jpg"
+    ],
+    "duration": 10.0
+  },
+  "arpege": {
+    "video": "arpege.mp4",
+    "poster": "arpege-poster.jpg",
+    "frames": [
+      "arpege-frame-1.jpg",
+      "arpege-frame-2.jpg",
+      "arpege-frame-3.jpg"
+    ],
+    "duration": 10.0
+  },
+  "veloce": {
+    "video": "veloce.mp4",
+    "poster": "veloce-poster.jpg",
+    "frames": [
+      "veloce-frame-1.jpg",
+      "veloce-frame-2.jpg",
+      "veloce-frame-3.jpg"
+    ],
+    "duration": 10.0
+  },
+  "coffee": {
+    "video": "coffee.mp4",
+    "poster": "coffee-poster.jpg",
+    "frames": [
+      "coffee-frame-1.jpg",
+      "coffee-frame-2.jpg",
+      "coffee-frame-3.jpg"
+    ],
+    "duration": 10.0
+  },
+  "burger": {
+    "video": "burger.mp4",
+    "poster": "burger-poster.jpg",
+    "frames": [
+      "burger-frame-1.jpg",
+      "burger-frame-2.jpg",
+      "burger-frame-3.jpg"
+    ],
+    "duration": 10.0
+  },
+  "crispy": {
+    "video": "crispy.mp4",
+    "poster": "crispy-poster.jpg",
+    "frames": [
+      "crispy-frame-1.jpg",
+      "crispy-frame-2.jpg",
+      "crispy-frame-3.jpg"
+    ],
+    "duration": 10.0
+  }
+}

@@ -1,0 +1,4 @@
+Contact: mailto:khaledeloufi27@gmail.com
+Expires: 2027-10-06T00:00:00.000Z
+Preferred-Languages: en, ar
+Canonical: https://nova.studio/.well-known/security.txt
