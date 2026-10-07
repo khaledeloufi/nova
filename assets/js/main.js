@@ -13,21 +13,41 @@
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const viewH = () => window.innerHeight || doc.documentElement.clientHeight;
 
-  /* ---------- Preloader ---------- */
+  /* ---------- Preloader: 0→100% counter + cinematic curtain ---------- */
   const preloader = doc.getElementById("preloader");
   if (preloader) {
+    const countEl = doc.getElementById("preloader-count");
     const start = performance.now();
-    const done = () => {
-      preloader.classList.add("done");
+    const DUR = 1800;
+    let revealed = false;
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
+      if (countEl) countEl.textContent = "100%";
+      preloader.classList.add("reveal");
       doc.body.classList.add("loaded");
       window.dispatchEvent(new CustomEvent("nova:loaded"));
+      setTimeout(() => preloader.classList.add("done"), 1350);
     };
-    window.addEventListener("load", () => {
-      const wait = Math.max(0, 900 - (performance.now() - start));
-      setTimeout(done, reduceMotion ? 0 : wait);
-    });
-    // safety: never trap the user
-    setTimeout(done, 3200);
+    if (reduceMotion) {
+      if (countEl) countEl.textContent = "100%";
+      window.addEventListener("load", () => setTimeout(reveal, 0));
+      setTimeout(reveal, 3200); // safety: never trap the user
+    } else {
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / DUR);
+        const e = 1 - Math.pow(1 - p, 3);
+        if (countEl) countEl.textContent = Math.round(e * 100) + "%";
+        if (p < 1) requestAnimationFrame(tick);
+        else setTimeout(reveal, 140);
+      };
+      requestAnimationFrame(tick);
+      window.addEventListener("load", () => {
+        const past = performance.now() - start;
+        setTimeout(reveal, Math.max(0, DUR - past));
+      });
+      setTimeout(reveal, 3600); // safety: never trap the user
+    }
   }
 
   /* ---------- Scroll progress ---------- */

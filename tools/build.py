@@ -226,10 +226,21 @@ def project_page(p):
 <main>
   <!-- preloader (keeps the cinematic entrance) -->
   <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="pl-grain" aria-hidden="true"></div>
+    <div class="pl-curtain pl-curtain-top" aria-hidden="true"></div>
+    <div class="pl-curtain pl-curtain-bottom" aria-hidden="true"></div>
     <div class="preloader-inner">
-      <img class="preloader-logo" src="../../assets/img/logo-320.png" alt="">
+      <div class="preloader-wordmark" aria-hidden="true">
+        <span class="pw-mask"><i>N</i></span>
+        <span class="pw-mask"><i>O</i></span>
+        <span class="pw-mask"><i>V</i></span>
+        <span class="pw-mask"><i>A</i></span>
+      </div>
       <div class="preloader-line"><span></span></div>
-      <span class="preloader-text label">Case Study</span>
+      <div class="preloader-meta">
+        <span class="preloader-count" id="preloader-count">0%</span>
+        <span class="preloader-text label">Case Study</span>
+      </div>
     </div>
   </div>
 
