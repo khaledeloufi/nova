@@ -231,10 +231,7 @@ def project_page(p):
     <div class="pl-curtain pl-curtain-bottom" aria-hidden="true"></div>
     <div class="preloader-inner">
       <div class="preloader-wordmark" aria-hidden="true">
-        <span class="pw-mask"><i>N</i></span>
-        <span class="pw-mask"><i>O</i></span>
-        <span class="pw-mask"><i>V</i></span>
-        <span class="pw-mask"><i>A</i></span>
+        <span class="pw-mask"><img src="../../assets/img/logo-640.png" alt=""></span>
       </div>
       <div class="preloader-line"><span></span></div>
       <div class="preloader-meta">

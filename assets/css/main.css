@@ -119,16 +119,11 @@ a.btn-accent:hover{ background:var(--ink); border-color:var(--ink); }
 .preloader.reveal .preloader-inner{ transform:translateY(-9vh); opacity:0;
   filter:drop-shadow(0 0 30px rgba(255,74,33,.5)); }
 
-/* NOVA wordmark — letters rise from the mask, one by one */
-.preloader-wordmark{ display:flex; font-family:var(--font-d); font-weight:800; text-transform:uppercase;
-  font-size:clamp(3.4rem, 11.5vw, 7.5rem); line-height:.95; letter-spacing:.06em; }
-.pw-mask{ display:inline-block; overflow:hidden; padding-bottom:.06em; margin-bottom:-.06em; }
-.pw-mask i{ display:block; font-style:normal; transform:translateY(115%);
-  animation:pw-up .95s var(--ease) forwards; }
-.pw-mask:nth-child(1) i{ animation-delay:.1s; }
-.pw-mask:nth-child(2) i{ animation-delay:.2s; }
-.pw-mask:nth-child(3) i{ animation-delay:.3s; }
-.pw-mask:nth-child(4) i{ animation-delay:.4s; }
+/* logo — rises from the mask at load */
+.preloader-wordmark{ display:flex; justify-content:center; }
+.pw-mask{ display:inline-block; overflow:hidden; line-height:0; }
+.pw-mask img{ display:block; width:min(78vw, 34rem); height:auto; transform:translateY(115%);
+  animation:pw-up 1s var(--ease) .1s forwards; }
 @keyframes pw-up{ from{ transform:translateY(115%); } to{ transform:none; } }
 
 .preloader-line{ width:15.5rem; height:1px; background:var(--line-2); overflow:hidden; }
