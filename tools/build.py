@@ -215,15 +215,6 @@ def project_page(p):
 
     services_html = "".join(f"<span>{s}</span>" for s in p["services"])
 
-    # preloader slats — giant NOVA split across 12 thin strips,
-    # zipper stagger from the center outward at the burst
-    delays = [0.248, 0.203, 0.158, 0.113, 0.068, 0.023,
-              0.023, 0.068, 0.113, 0.158, 0.203, 0.248]
-    strips_html = "\n".join(
-        f'    <div class="pl-strip" style="--d:{d:.3f}s"><span class="pl-word">NOVA</span></div>'
-        for d in delays
-    )
-
     page = chrome_head(
         f"{p['title']} — NOVA AI Case Study",
         p["description"],
@@ -235,13 +226,16 @@ def project_page(p):
 <main>
   <!-- preloader (keeps the cinematic entrance) -->
   <div class="preloader" id="preloader" aria-hidden="true">
-    <div class="pl-strips" aria-hidden="true">
-      {strips_html}
-    </div>
-    <div class="pl-seam" aria-hidden="true"></div>
-    <div class="pl-flash" aria-hidden="true"></div>
     <div class="pl-grain" aria-hidden="true"></div>
+    <div class="pl-curtain pl-curtain-top" aria-hidden="true"></div>
+    <div class="pl-curtain pl-curtain-bottom" aria-hidden="true"></div>
     <div class="preloader-inner">
+      <div class="preloader-wordmark" aria-hidden="true">
+        <span class="pw-mask"><i>N</i></span>
+        <span class="pw-mask"><i>O</i></span>
+        <span class="pw-mask"><i>V</i></span>
+        <span class="pw-mask"><i>A</i></span>
+      </div>
       <div class="preloader-line"><span></span></div>
       <div class="preloader-meta">
         <span class="preloader-count" id="preloader-count">0%</span>

@@ -24,15 +24,10 @@
       if (revealed) return;
       revealed = true;
       if (countEl) countEl.textContent = "100%";
-      // beat 1 — crack: the seam tears and the halves micro-split
-      preloader.classList.add("crack");
-      // beat 2 — a beat of tension, then beat 3 — the slats burst
-      setTimeout(() => {
-        preloader.classList.add("reveal");
-        doc.body.classList.add("loaded");
-        window.dispatchEvent(new CustomEvent("nova:loaded"));
-      }, 340);
-      setTimeout(() => preloader.classList.add("done"), 1650);
+      preloader.classList.add("reveal");
+      doc.body.classList.add("loaded");
+      window.dispatchEvent(new CustomEvent("nova:loaded"));
+      setTimeout(() => preloader.classList.add("done"), 1350);
     };
     if (reduceMotion) {
       if (countEl) countEl.textContent = "100%";
