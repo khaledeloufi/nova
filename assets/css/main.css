@@ -90,46 +90,62 @@ a.btn-accent{ background:var(--accent); border-color:var(--accent); color:#0a0a0
 a.btn-accent:hover{ background:var(--ink); border-color:var(--ink); }
 
 /* ============================================================
-   PRELOADER — NOVA counter + cinematic curtain
+   PRELOADER — NOVA strips: split-type, 3-beat shutter reveal
+   ------------------------------------------------------------
+   beat 1 crack  -> a hairline tears at the seam, halves micro-split
+   beat 2 hold   -> a beat of tension
+   beat 3 burst  -> 12 slats scatter outward (zipper from center)
+                    carrying slices of the giant NOVA wordmark
    ============================================================ */
-.preloader{ position:fixed; inset:0; z-index:200; background:transparent;
-  display:grid; place-items:center; overflow:hidden;
-  transition:visibility 0s .2s; }
+.preloader{ position:fixed; inset:0; z-index:200; background:#0a0a09;
+  overflow:hidden; transition:visibility 0s .2s; }
 .preloader.reveal{ pointer-events:none; }
 .preloader.done{ visibility:hidden; }
 
-/* two curtain panels — the theatre split */
-.pl-curtain{ position:absolute; left:0; width:100%; height:50.4%; z-index:1;
-  will-change:transform; transition:transform 1.05s var(--ease) .05s; }
-.pl-curtain-top{ top:0;
-  background:radial-gradient(120% 130% at 50% 110%, rgba(255,74,33,.07), transparent 62%), #0a0a09;
-  border-bottom:1px solid rgba(255,74,33,.28); }
-.pl-curtain-bottom{ bottom:0;
-  background:radial-gradient(120% 130% at 50% -10%, rgba(255,74,33,.07), transparent 62%), #0a0a09;
-  border-top:1px solid rgba(255,74,33,.28); }
-.preloader.reveal .pl-curtain-top{ transform:translateY(-102%); }
-.preloader.reveal .pl-curtain-bottom{ transform:translateY(102%); }
+/* 12 thin slats that assemble the giant wordmark */
+.pl-strips{ position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; }
+.pl-strip{ position:relative; flex:1 1 0; overflow:hidden;
+  will-change:transform; transition:transform .8s var(--ease) 0s; }
+.pl-strip::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:rgba(236,233,226,.05); }
+.pl-word{ position:absolute; left:0; width:100%; text-align:center;
+  top:calc(38vh - .5em); font-family:var(--font-d); font-weight:800;
+  text-transform:uppercase; font-size:clamp(3rem, 13.5vw, 8.5rem);
+  line-height:1; letter-spacing:.05em; color:var(--ink); opacity:0;
+  animation:pl-in 1s var(--ease) .25s forwards; }
+
+/* the seam — a hairline of light at mid-screen */
+.pl-seam{ position:absolute; left:0; right:0; top:50vh; height:1px; z-index:3;
+  background:var(--accent); box-shadow:0 0 14px rgba(255,74,33,.75);
+  opacity:.25; transition:opacity .25s var(--ease), transform .25s var(--ease); }
+.preloader.crack .pl-seam{ opacity:1; transform:scaleY(2.4); }
+.preloader.reveal .pl-seam{ opacity:0; }
+
+/* beat 1 — crack: the halves tear apart along the seam */
+.preloader.crack .pl-strip{ transition:transform .3s var(--ease); }
+.preloader.crack .pl-strip:nth-child(-n+6){ transform:translateY(-1.6vh); }
+.preloader.crack .pl-strip:nth-child(n+7){ transform:translateY(1.6vh); }
+
+/* beat 3 — burst: slats fly out, zipper from the center out */
+.preloader.reveal .pl-strip{ transition:transform .85s var(--ease) var(--d,0s); }
+.preloader.reveal .pl-strip:nth-child(-n+6){ transform:translateY(-120vh); }
+.preloader.reveal .pl-strip:nth-child(n+7){ transform:translateY(120vh); }
+
+/* orange flash at the burst */
+.pl-flash{ position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0;
+  background:radial-gradient(circle at 50% 40%, rgba(255,74,33,.2), transparent 62%); }
+.preloader.reveal .pl-flash{ animation:pl-flash .7s ease-out .04s forwards; }
+@keyframes pl-flash{ 0%{opacity:0} 35%{opacity:1} 100%{opacity:0} }
 
 /* subtle film grain over everything */
-.pl-grain{ position:absolute; inset:0; z-index:3; pointer-events:none; opacity:.055;
+.pl-grain{ position:absolute; inset:0; z-index:4; pointer-events:none; opacity:.055;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-.preloader-inner{ position:relative; z-index:2; display:grid; justify-items:center; gap:1.15rem;
-  transition:transform 1s var(--ease) .1s, opacity .8s var(--ease) .1s, filter .8s var(--ease) .1s; }
-.preloader.reveal .preloader-inner{ transform:translateY(-9vh); opacity:0;
-  filter:drop-shadow(0 0 30px rgba(255,74,33,.5)); }
-
-/* NOVA wordmark — letters rise from the mask, one by one */
-.preloader-wordmark{ display:flex; font-family:var(--font-d); font-weight:800; text-transform:uppercase;
-  font-size:clamp(3.4rem, 11.5vw, 7.5rem); line-height:.95; letter-spacing:.06em; }
-.pw-mask{ display:inline-block; overflow:hidden; padding-bottom:.06em; margin-bottom:-.06em; }
-.pw-mask i{ display:block; font-style:normal; transform:translateY(115%);
-  animation:pw-up .95s var(--ease) forwards; }
-.pw-mask:nth-child(1) i{ animation-delay:.1s; }
-.pw-mask:nth-child(2) i{ animation-delay:.2s; }
-.pw-mask:nth-child(3) i{ animation-delay:.3s; }
-.pw-mask:nth-child(4) i{ animation-delay:.4s; }
-@keyframes pw-up{ from{ transform:translateY(115%); } to{ transform:none; } }
+/* counter cluster — sits right below the seam */
+.preloader-inner{ position:absolute; left:0; right:0; top:56vh; z-index:5;
+  display:grid; justify-items:center; gap:1.15rem;
+  transition:transform .9s var(--ease) .15s, opacity .6s var(--ease) .15s; }
+.preloader.reveal .preloader-inner{ transform:translateY(7vh); opacity:0; }
 
 .preloader-line{ width:15.5rem; height:1px; background:var(--line-2); overflow:hidden; }
 .preloader-line span{ display:block; height:100%; width:100%; background:var(--accent);
