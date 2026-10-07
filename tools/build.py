@@ -224,22 +224,20 @@ def project_page(p):
 
     page += f"""
 <main>
-  <!-- preloader (keeps the cinematic entrance) -->
+  <!-- preloader — cinematic film intro -->
   <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="pl-overlay" aria-hidden="true"></div>
     <div class="pl-grain" aria-hidden="true"></div>
-    <div class="pl-curtain pl-curtain-top" aria-hidden="true"></div>
-    <div class="pl-curtain pl-curtain-bottom" aria-hidden="true"></div>
-    <div class="preloader-inner">
-      <div class="preloader-wordmark" aria-hidden="true">
-        <span class="pw-mask"><i>N</i></span>
-        <span class="pw-mask"><i>O</i></span>
-        <span class="pw-mask"><i>V</i></span>
-        <span class="pw-mask"><i>A</i></span>
-      </div>
-      <div class="preloader-line"><span></span></div>
-      <div class="preloader-meta">
-        <span class="preloader-count" id="preloader-count">0%</span>
-        <span class="preloader-text label">Case Study</span>
+    <div class="pl-flash" aria-hidden="true"></div>
+    <div class="pl-chrome" aria-hidden="true">
+      <span class="pl-brand label">NOVA AI — Case Study</span>
+      <span class="pl-rec label"><i class="pl-dot"></i>REC</span>
+      <div class="pl-bottom">
+        <div class="pl-line"><span></span></div>
+        <div class="pl-meta">
+          <span class="pl-count" id="pl-count">0%</span>
+          <span class="pl-tc" id="pl-tc">00:00:00:00</span>
+        </div>
       </div>
     </div>
   </div>

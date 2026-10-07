@@ -13,13 +13,26 @@
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const viewH = () => window.innerHeight || doc.documentElement.clientHeight;
 
-  /* ---------- Preloader: 0→100% counter + cinematic curtain ---------- */
+  /* ---------- Preloader: film intro — counter, timecode, wipe reveal ---------- */
   const preloader = doc.getElementById("preloader");
   if (preloader) {
-    const countEl = doc.getElementById("preloader-count");
+    const countEl = doc.getElementById("pl-count");
+    const tcEl = doc.getElementById("pl-tc");
+    const heroV = doc.querySelector(".hero-media video, .p-hero-media video");
     const start = performance.now();
-    const DUR = 1800;
+    const DUR = 1800;      // counter run time
+    const FPS = 30;
+    const TOTAL_FRAMES = 45 * FPS; // a 45s reel timeline ticks during load
     let revealed = false;
+
+    const fmtTC = (f) => {
+      const ff = f % FPS;
+      const s = Math.floor(f / FPS) % 60;
+      const m = Math.floor(f / (FPS * 60)) % 60;
+      const h = Math.floor(f / (FPS * 3600));
+      return [h, m, s, ff].map((n) => String(n).padStart(2, "0")).join(":");
+    };
+
     const reveal = () => {
       if (revealed) return;
       revealed = true;
@@ -27,17 +40,37 @@
       preloader.classList.add("reveal");
       doc.body.classList.add("loaded");
       window.dispatchEvent(new CustomEvent("nova:loaded"));
-      setTimeout(() => preloader.classList.add("done"), 1350);
+      // camera settle — quick zoom of the hero film as the wipe lands
+      if (heroV && !reduceMotion) {
+        const from = 1.15, dur = 950, t0 = performance.now();
+        const step = (now) => {
+          const p = Math.min(1, (now - t0) / dur);
+          const e = 1 - Math.pow(1 - p, 3);
+          heroV.style.transform = "scale(" + (from - (from - 1) * e) + ")";
+          if (p < 1) requestAnimationFrame(step);
+          else heroV.style.transform = "";
+        };
+        requestAnimationFrame(step);
+      }
+      setTimeout(() => preloader.classList.add("done"), 1400);
     };
+
     if (reduceMotion) {
       if (countEl) countEl.textContent = "100%";
+      if (tcEl) tcEl.textContent = fmtTC(TOTAL_FRAMES);
       window.addEventListener("load", () => setTimeout(reveal, 0));
       setTimeout(reveal, 3200); // safety: never trap the user
     } else {
+      let lastFrame = -1;
       const tick = (now) => {
         const p = Math.min(1, (now - start) / DUR);
         const e = 1 - Math.pow(1 - p, 3);
         if (countEl) countEl.textContent = Math.round(e * 100) + "%";
+        const f = Math.round(e * TOTAL_FRAMES);
+        if (f !== lastFrame) {
+          lastFrame = f;
+          if (tcEl) tcEl.textContent = fmtTC(f);
+        }
         if (p < 1) requestAnimationFrame(tick);
         else setTimeout(reveal, 140);
       };
